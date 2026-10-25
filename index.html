@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#101828" />
+  <meta name="description" content="A clean, responsive personal expense tracker to manage income, expenses, and savings." />
+  <title>SpendWise — Personal Finance</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#" aria-label="SpendWise home">
+        <span class="brand-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 17.5 9 12l3.2 3.2L20 7.5M14.5 7.5H20v5.5"/></svg></span>
+        <span>spend<span class="brand-light">wise</span></span>
+      </a>
+      <div class="workspace-label">WORKSPACE</div>
+      <nav class="nav-menu" aria-label="Main navigation">
+        <a class="nav-link active" href="#overview"><span class="nav-icon">▦</span> Overview</a>
+        <a class="nav-link" href="#transactions"><span class="nav-icon">↔</span> Transactions</a>
+        <a class="nav-link" href="#analytics"><span class="nav-icon">◔</span> Analytics</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="sidebar-tip">
+          <div class="tip-icon">✦</div>
+          <strong>Small steps add up.</strong>
+          <p>Track your spending today to build better money habits tomorrow.</p>
+        </div>
+        <div class="profile">
+          <div class="avatar">SW</div>
+          <div class="profile-copy"><strong>My Wallet</strong><span>Personal account</span></div>
+          <span class="profile-dots">•••</span>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content" id="overview">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobileMenu" aria-label="Toggle navigation">☰</button>
+        <div class="breadcrumb">Workspace <span>/</span> <strong>Overview</strong></div>
+        <div class="topbar-right">
+          <span class="today-label" id="todayLabel"></span>
+          <button class="icon-button" id="themeToggle" title="Toggle color theme" aria-label="Toggle color theme">◐</button>
+          <button class="primary-button top-add" id="openAddTop"><span>＋</span> Add transaction</button>
+        </div>
+      </header>
+
+      <section class="welcome-row">
+        <div>
+          <p class="eyebrow">YOUR MONEY, IN FOCUS</p>
+          <h1>Good overview<span class="period">.</span></h1>
+          <p class="subheading">Here’s what’s happening with your finances.</p>
+        </div>
+        <label class="month-picker">
+          <span>Period</span>
+          <input type="month" id="monthFilter" aria-label="Choose reporting month" />
+        </label>
+      </section>
+
+      <section class="summary-grid" aria-label="Financial summary">
+        <article class="summary-card balance-card">
+          <div class="card-top"><span class="card-label">Total balance</span><span class="card-icon balance-icon">↗</span></div>
+          <div class="metric" id="balanceValue">₹0.00</div>
+          <div class="metric-foot"><span class="status-dot"></span><span>Income minus expenses</span></div>
+          <div class="balance-decoration"></div>
+        </article>
+        <article class="summary-card">
+          <div class="card-top"><span class="card-label">Total income</span><span class="card-icon income-icon">↓</span></div>
+          <div class="metric" id="incomeValue">₹0.00</div>
+          <div class="metric-foot"><span class="mini-trend positive">↗</span><span>This month’s income</span></div>
+        </article>
+        <article class="summary-card">
+          <div class="card-top"><span class="card-label">Total expenses</span><span class="card-icon expense-icon">↑</span></div>
+          <div class="metric" id="expenseValue">₹0.00</div>
+          <div class="metric-foot"><span class="mini-trend negative">↗</span><span>This month’s spending</span></div>
+        </article>
+        <article class="summary-card">
+          <div class="card-top"><span class="card-label">Savings rate</span><span class="card-icon savings-icon">◉</span></div>
+          <div class="metric" id="savingsValue">0%</div>
+          <div class="progress-track"><span id="savingsProgress"></span></div>
+          <div class="metric-foot"><span id="savingsCaption">Income saved this month</span></div>
+        </article>
+      </section>
+
+      <section class="content-grid">
+        <article class="panel spending-panel" id="analytics">
+          <div class="panel-heading">
+            <div><h2>Spending overview</h2><p>See how your money moves</p></div>
+            <span class="period-chip" id="chartPeriod">This month</span>
+          </div>
+          <div class="chart-layout">
+            <div class="donut-wrap">
+              <div class="donut-chart" id="donutChart"><div class="donut-hole"><span>Total spent</span><strong id="donutTotal">₹0</strong></div></div>
+            </div>
+            <div class="legend" id="categoryLegend"><div class="empty-chart">Add expenses to see your categories.</div></div>
+          </div>
+          <div class="panel-divider"></div>
+          <div class="spending-footer"><span class="tiny-dot"></span><span id="spendingFooter">Your spending breakdown will appear here.</span></div>
+        </article>
+
+        <article class="panel activity-panel">
+          <div class="panel-heading">
+            <div><h2>Cash flow</h2><p>Income vs. expenses by day</p></div>
+            <div class="chart-key"><span><i class="key-income"></i> Income</span><span><i class="key-expense"></i> Expenses</span></div>
+          </div>
+          <div class="bar-chart" id="cashflowChart" aria-label="Income and expense bar chart"></div>
+          <div class="cashflow-bottom"><span>Monthly cash flow</span><strong id="cashflowNet">₹0.00 net</strong></div>
+        </article>
+      </section>
+
+      <section class="panel transactions-panel" id="transactions">
+        <div class="panel-heading transactions-heading">
+          <div><h2>Recent transactions</h2><p>Keep an eye on where it goes</p></div>
+          <div class="transaction-actions">
+            <label class="search-box"><span>⌕</span><input type="search" id="searchInput" placeholder="Search transactions..." aria-label="Search transactions" /></label>
+            <select id="typeFilter" class="select-control" aria-label="Filter by transaction type"><option value="all">All types</option><option value="income">Income</option><option value="expense">Expenses</option></select>
+            <button class="secondary-button" id="exportBtn">↓ Export</button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>TRANSACTION</th><th>CATEGORY</th><th>DATE</th><th>TYPE</th><th class="align-right">AMOUNT</th><th></th></tr></thead>
+            <tbody id="transactionRows"></tbody>
+          </table>
+          <div class="empty-state" id="emptyState">
+            <div class="empty-state-icon">↔</div><strong>No transactions yet</strong>
+            <p>Add your first income or expense to get started.</p>
+            <button class="primary-button" id="emptyAddButton">＋ Add transaction</button>
+          </div>
+        </div>
+        <div class="table-footer"><span id="transactionCount">Showing 0 transactions</span><button class="text-button" id="clearFilters">Clear filters</button></div>
+      </section>
+
+      <footer class="footer"><span>© <span id="year"></span> SpendWise</span><span>Built for better money habits <span class="footer-heart">♥</span></span></footer>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="modalBackdrop" hidden>
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-heading"><div><p class="eyebrow">KEEP IT UP TO DATE</p><h2 id="modalTitle">Add transaction</h2><p>Enter the details below to update your finances.</p></div><button class="close-button" id="closeModal" aria-label="Close dialog">×</button></div>
+      <form id="transactionForm">
+        <div class="type-switch"><button type="button" class="type-option selected" data-type="expense">↗ &nbsp; Expense</button><button type="button" class="type-option" data-type="income">↙ &nbsp; Income</button></div>
+        <input type="hidden" id="transactionType" value="expense" />
+        <div class="form-grid">
+          <label class="form-field full-width"><span>Description</span><input id="description" type="text" placeholder="e.g. Grocery shopping" maxlength="70" required /></label>
+          <label class="form-field"><span>Amount (₹)</span><input id="amount" type="number" placeholder="0.00" min="0.01" step="0.01" required /></label>
+          <label class="form-field"><span>Category</span><select id="category" required></select></label>
+          <label class="form-field full-width"><span>Date</span><input id="transactionDate" type="date" required /></label>
+        </div>
+        <div class="form-error" id="formError" role="alert"></div>
+        <div class="modal-actions"><button type="button" class="secondary-button" id="cancelModal">Cancel</button><button type="submit" class="primary-button">Save transaction <span>→</span></button></div>
+      </form>
+    </section>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>
